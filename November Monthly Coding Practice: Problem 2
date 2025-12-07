@@ -1,0 +1,40 @@
+scale_names = {
+    "C": "Celsius",
+    "F": "Fahrenheit",
+    "K": "Kelvin"
+}
+
+from_scale = input("Convert from (C/F/K): ").upper()
+to_scale = input("Convert to (C/F/K): ").upper()
+
+if from_scale == to_scale:
+    print("Error: The 'from' and 'to' scales must be different.")
+    exit()
+
+if from_scale not in "CFK" or to_scale not in "CFK":
+    print("Error: Invalid temperature scale.")
+    exit()
+
+try:
+    value = float(input("Enter the temperature value: "))
+except ValueError:
+    print("Error: You must enter a numeric value.")
+    exit()
+
+def convert_temperature(value, from_s, to_s):
+    if from_s == "C" and to_s == "F":
+        return (value * 9/5) + 32
+    elif from_s == "C" and to_s == "K":
+        return value + 273.15
+    elif from_s == "F" and to_s == "C":
+        return (value - 32) * 5/9
+    elif from_s == "F" and to_s == "K":
+        return (value - 32) * 5/9 + 273.15
+    elif from_s == "K" and to_s == "C":
+        return value - 273.15
+    elif from_s == "K" and to_s == "F":
+        return (value - 273.15) * 9/5 + 32
+
+converted = convert_temperature(value, from_scale, to_scale)
+
+print(f"{value}° {scale_names[from_scale]} is {converted:.2f}° {scale_names[to_scale]}.")
