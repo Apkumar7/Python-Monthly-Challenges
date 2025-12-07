@@ -1,0 +1,19 @@
+phrase = input("Enter a phrase to generate an acronym: ")
+
+def generate_acronym(text):
+    if not text or text.strip() == "":
+        return ""
+
+    words = text.split()
+    letters = []
+
+    for word in words:
+        for char in word:
+            if char.isalpha():
+                letters.append(char.upper())
+                break
+
+    return "".join(letters)
+
+acronym = generate_acronym(phrase)
+print("Acronym:", acronym)
