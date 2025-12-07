@@ -1,0 +1,25 @@
+def has_unique_characters(s: str) -> bool:
+    """
+    Returns True if all characters in the string are unique, otherwise False.
+    """
+    # Optional: make case-insensitive
+    s = s.lower()
+
+    # Use a set to track seen characters
+    return len(s) == len(set(s))
+
+
+# Example manual tests
+if __name__ == "__main__":
+    test_cases = [
+        "abcdef",         # all unique
+        "hello",          # 'l' repeats
+        "",               # empty string
+        "Python!",        # unique chars
+        "AaBb",           # case-insensitive duplicates
+        "123@#$",         # all unique
+        "a a",            # includes space duplicate
+    ]
+
+    for text in test_cases:
+        print(f"Input: {text!r} → {has_unique_characters(text)}")
