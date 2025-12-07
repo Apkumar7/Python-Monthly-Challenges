@@ -1,0 +1,28 @@
+import string
+
+sentence = input("Enter a sentence: ")
+
+def first_longest_word(text):
+    clean_text = text.translate(str.maketrans("", "", string.punctuation))
+    words = clean_text.split()
+
+    if not words:
+        return None
+
+    longest_word = ""
+    max_length = 0
+
+    for word in words:
+        if len(word) > max_length:
+            longest_word = word
+            max_length = len(word)
+
+    return longest_word, max_length
+
+result = first_longest_word(sentence)
+
+if result is None:
+    print("No valid words found.")
+else:
+    word, length = result
+    print(f"The longest word is '{word}' with {length} characters.")
