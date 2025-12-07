@@ -1,0 +1,59 @@
+# Palindrome checker that ignores spaces, punctuation, and case.
+# Uses str.isalnum() so Unicode letters/digits are preserved.
+# Time complexity: O(n). Space: O(n) for the normalized string.
+
+from typing import Tuple
+
+def is_palindrome(s: str) -> bool:
+    """
+    Return True if s is a palindrome when ignoring non-alphanumeric characters
+    and case; otherwise False.
+    """
+    # Normalize: keep only alphanumeric characters, lowercased
+    clean = "".join(ch.lower() for ch in s if ch.isalnum())
+    # Quick check: empty or single char are palindromes
+    # (the following compare already handles them, so this is optional)
+    return clean == clean[::-1]
+
+
+# Optional two-pointer variant (lower memory footprint)
+def is_palindrome_two_pointer(s: str) -> bool:
+    """
+    Two-pointer check without building a reversed string.
+    Slightly less extra memory (only indexes and temporary chars).
+    """
+    left, right = 0, len(s) - 1
+    while left < right:
+        # advance left to next alnum
+        while left < right and not s[left].isalnum():
+            left += 1
+        # advance right to prev alnum
+        while left < right and not s[right].isalnum():
+            right -= 1
+        if s[left].lower() != s[right].lower():
+            return False
+        left += 1
+        right -= 1
+    return True
+
+
+if __name__ == "__main__":
+    # small interactive demo
+    examples = [
+        "Racecar",
+        "Hello",
+        "A man, a plan, a canal: Panama!",
+        "Was it a car or a cat I saw?",
+        "",
+        "  ",
+        "No 'x' in Nixon",
+        "ñañ",                # unicode with ñ (palindrome)
+        "Åbba",               # note: 'Å' != 'A' unless normalized
+        "Madam, I'm Adam"
+    ]
+
+    for ex in examples:
+        print(f"Input: {ex!r}")
+        print("  is_palindrome:", is_palindrome(ex))
+        print("  two-pointer:   ", is_palindrome_two_pointer(ex))
+        print()
